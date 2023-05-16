@@ -1,7 +1,7 @@
 # Desafío 4: La inmobiliaria 
 
 ## Requisitos técnicos: 
-    
+
 - Operadores.
 
 - Estructuras de datos.
@@ -14,10 +14,10 @@
 ### Se te pide construir un programa que permita:
 - Agregar, editar y eliminar inmuebles a la lista.
 Las funciones deben ajustarse al formato de lista y reglas de validación.
-
+    
 - Cambiar el estado de un inmueble, sin modificar sus demás datos.
 Las funciones deben ajustarse al formato de lista y reglas de validación.
-
+    
 - Hacer búsqueda de inmuebles en función de un presupuesto dado.
 La función recibirá como entrada la lista de inmuebles y un precio, y devolverá otra lista con los inmuebles cuyo precio sea menor o igual que el dado y el estado sea Disponible o Reservado. Los inmuebles de la lista que se devuelva deben incorporar un nuevo par a cada diccionario con el precio del inmueble, donde el precio de un inmueble se calcula con las reglas de precio en función de la zona. 
  
@@ -41,6 +41,7 @@ La función recibirá como entrada la lista de inmuebles y un precio, y devolver
     - Menores de 2 habitaciones.
      
 ## Reglas de precio:
+
 - Zona A: precio = (metros x 100 + habitaciones x 500 + garaje x 1500) x (1 - antigüedad / 100)
 
 - Zona B: precio = (metros x 100 + habitaciones x 500 + garaje x 1500) x (1 - antigüedad / 100) x 1.5
