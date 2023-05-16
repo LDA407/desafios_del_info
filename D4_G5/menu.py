@@ -2,13 +2,12 @@ from models.inmobiliario import Inmueble
 from models.libroInmobiliario import LibroDeRegistros
 from utils import validate_fields
 
-def crear_inmueble(client):
-    if client:
-        libro = LibroDeRegistros()
-        libro.agregar(Inmueble(**client))
-        print(libro)
-    else:
-        print('Client already exists')
+libro = LibroDeRegistros()
+
+
+def crear_inmueble(data):
+    libro.agregar(Inmueble(**data))
+    print(libro)
 
 
 def get_client_info(field_name):
@@ -25,7 +24,7 @@ if __name__ == '__main__':
     command = command.upper()
 
     if command == 'C':
-        client = {
+        data = {
             'año': get_client_info('año'),
             'metros': get_client_info('metros'),
             'habitaciones': get_client_info('habitaciones'),
@@ -33,4 +32,4 @@ if __name__ == '__main__':
             'zona': get_client_info('zona'),
             'estado': get_client_info('estado')
         }
-        crear_inmueble(client)
+        crear_inmueble(data)
