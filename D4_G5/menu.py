@@ -1,35 +1,80 @@
 from models.inmobiliario import Inmueble
-from models.libroInmobiliario import LibroDeRegistros
-from utils import validate_fields
+from validadores import validar_campos
 
-libro = LibroDeRegistros()
+libro = []
+
+
+def bienvenida():
+    print(f"""
+        BIENVENIDO
+        {'*' * 50}\n
+        [C]reate user
+        [D]elete user
+        [U]pdate user
+        [S]earch user
+        [L]ist user\n
+        {'*' * 50}
+        """
+    )
 
 
 def crear_inmueble(data):
-    libro.agregar(Inmueble(**data))
-    print(libro)
+    libro.append(Inmueble(**data))
+    mostrar_los_registros()
 
 
-def get_client_info(field_name):
-    field_value = None
-    
-    while not field_value:
-        field_value = validate_fields(field_name)
+def mostrar_los_registros():
+    print([i.__dict__ for i in libro])
 
-    return field_value
+
+def buscar_por_estado(estado):
+    print([i.__dict__ for i in libro if i.estado == estado])
+
+
+def buscar_por_zona(zona):
+    print([i.__dict__ for i in libro if i.zona == zona])
+
+
+def buscar_los_que_tengan_garage(garage):
+    print([i.__dict__ for i in libro if i.garage == garage])
+
+
+def modificar_el_estado(id, nuevo_estado):
+    pass
+
+
+def obtener_la_info(nombre_del_campo):
+    valor = None
+    while not valor:
+        valor = validar_campos(nombre_del_campo)
+    return valor
 
 
 if __name__ == '__main__':
-    command = input()
-    command = command.upper()
+    bienvenida()
+    comando = input()
+    comando = comando.upper()
 
-    if command == 'C':
+
+    if comando == 'C':
         data = {
-            'año': get_client_info('año'),
-            'metros': get_client_info('metros'),
-            'habitaciones': get_client_info('habitaciones'),
-            'garage': get_client_info('garage'),
-            'zona': get_client_info('zona'),
-            'estado': get_client_info('estado')
+            'año': obtener_la_info('año'),
+            'metros': obtener_la_info('metros'),
+            'habitaciones': obtener_la_info('habitaciones'),
+            'garage': obtener_la_info('garage'),
+            'zona': obtener_la_info('zona'),
+            'estado': obtener_la_info('estado')
         }
         crear_inmueble(data)
+    
+    p1 = Inmueble(año=2010, metros=255, habitaciones=6, garage=True, zona="A", estado="Disponible")
+    p2 = Inmueble(año=2000, metros=40, habitaciones=3, garage=False, zona="B", estado="Disponible")
+    libro.append(p1)
+    libro.append(p2)
+    mostrar_los_registros()
+    print("\nubicacion?")
+    buscar_por_zona("A")
+    print("\nesta disponible?")
+    buscar_por_estado("Disponible")
+    print("\ntiene garage?")
+    buscar_los_que_tengan_garage(False)
