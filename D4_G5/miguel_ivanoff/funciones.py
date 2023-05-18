@@ -1,9 +1,9 @@
 from datetime import datetime
 
 def calculaPrecio(anio,sup,habit,garaje,sector):
-    fecha_actual= datetime.now()
-    anio_hoy=fecha_actual.year
-    parcial=(sup*100+habit*500+garaje*1500)*(1-(anio_hoy-anio)/100)
+            
+    parcial=(sup*100+habit*500+verifica_garaje(garaje)*1500)*(1-(antiguedad()-anio)/100)
+
     if sector.lower()=="a":
         precio=parcial
         return precio
@@ -14,7 +14,21 @@ def calculaPrecio(anio,sup,habit,garaje,sector):
         precio=parcial*2
         return precio
     
+
+def verifica_garaje(garaje):
+    val_garaje=0
     
+    if garaje==True:
+        val_garaje=1
+
+    return val_garaje
+
+def antiguedad():
+    fecha_actual= datetime.now()
+    anio_hoy=fecha_actual.year
+    return anio_hoy
+
+
 def validaParametros(anio,sup,habit,sector,estado):
     if anio<2000:
         print('Solo captamos desde el 2000 en adelante.')
