@@ -2,6 +2,7 @@
 
 inmuebles = [
     {
+        "id" : 1,
         "año" : 2010,
         "metros" : 150,
         "habitaciones" : 4,
@@ -10,6 +11,7 @@ inmuebles = [
         "estado" : "Disponible",
     },
     {
+        "id" : 2
         "año" : 2016,
         "metros" : 80,
         "habitaciones" : 2,
@@ -18,6 +20,7 @@ inmuebles = [
         "estado" : "Reservado",
     },
     {
+        "id" : 3
         "año" : 2000,
         "metros" : 180,
         "habitaciones" : 4,
@@ -26,6 +29,7 @@ inmuebles = [
         "estado" : "Disponible",
     },
     {
+        "id" : 4
         "año" : 2015,
         "metros" : 95,
         "habitaciones" : 3,
@@ -34,6 +38,7 @@ inmuebles = [
         "estado" : "Vendido",
     },
     {
+        "id" : 5
         "año" : 2008,
         "metros" : 60,
         "habitaciones" : 2,
