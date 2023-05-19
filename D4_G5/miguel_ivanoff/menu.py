@@ -3,9 +3,9 @@ from os import system
 def encabezado():
     system('cls')
 
-    print('==================================================================')
+    print('='*75)
     print('                       Gestión Inmobiliaria')
-    print('==================================================================')
+    print('='*75)
 
 def verMenu():
     print('\n\t Menu general')

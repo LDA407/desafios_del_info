@@ -51,7 +51,7 @@ while True:
         prop=int(input("Seleccione la propiedad a cambiar el estado:"))
         nuevo_estado=input('Ingrese el nuevo estado (Disponible - Reservado - Vendido):')
 
-        op=input('Está seguro de cambiar de estado? S/N').lower()
+        op=input('Está seguro de cambiar de estado? S/N ').lower()
         
         if op=="s":
             lista_inmueble[prop-1]['estado']=nuevo_estado
@@ -65,7 +65,6 @@ while True:
     
     if opcion==4:
         menu.encabezado()
-        print('\n =========== Buscar por un Presupuesto ==========')
         monto=int(input('\tIngrese su presupuesto: '))
         
         prop_listadas=funciones.extrae_prop(lista_inmueble)
