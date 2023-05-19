@@ -1,4 +1,3 @@
-### Desafios# desafios_del_info
 # Desafío 4: La inmobiliaria 
 
 ## Requisitos técnicos: 
@@ -48,3 +47,4 @@ La función recibirá como entrada la lista de inmuebles y un precio, y devolver
 - Zona B: precio = (metros x 100 + habitaciones x 500 + garaje x 1500) x (1 - antigüedad / 100) x 1.5
 
 - Zona C: precio = (metros x 100 + habitaciones x 500 + garaje x 1500) x (1 - antigüedad / 100) x 2 
+
