@@ -45,17 +45,21 @@ while True:
     if opcion==2:
         menu.encabezado()
         contador=0
-        print('====== Propiedades Disponibles y Reservadas ======')
         for p in lista_inmueble:
             contador+=1
             print(f"{contador}- Propiedad de {p['metros']}m2, de zona: {p['zona']}, y estado: {p['estado']}.")
         prop=int(input("Seleccione la propiedad a cambiar el estado:"))
+        nuevo_estado=input('Ingrese el nuevo estado (Disponible - Reservado - Vendido):')
+
+        op=input('Está seguro de cambiar de estado? S/N').lower()
         
-        lista_inmueble[prop-1]['estado']='Vendido'
-        print(f'Se ha modificado correctamente el estado de la propiedad {prop-1}')
-        print(lista_inmueble[prop-1])
-        input('<<Presiones ENTER>>')
+        if op=="s":
+            lista_inmueble[prop-1]['estado']=nuevo_estado
+            print(f'Se ha modificado correctamente el estado de la propiedad {prop-1}')
+            print(lista_inmueble[prop-1])
+            input('<<Presiones ENTER>>')
         
+
     if opcion==3:
         pass
     
