@@ -11,7 +11,7 @@ inmuebles = [
         "estado" : "Disponible",
     },
     {
-        "id" : 2
+        "id" : 2,
         "año" : 2016,
         "metros" : 80,
         "habitaciones" : 2,
@@ -20,7 +20,7 @@ inmuebles = [
         "estado" : "Reservado",
     },
     {
-        "id" : 3
+        "id" : 3,
         "año" : 2000,
         "metros" : 180,
         "habitaciones" : 4,
@@ -29,7 +29,7 @@ inmuebles = [
         "estado" : "Disponible",
     },
     {
-        "id" : 4
+        "id" : 4,
         "año" : 2015,
         "metros" : 95,
         "habitaciones" : 3,
@@ -38,7 +38,7 @@ inmuebles = [
         "estado" : "Vendido",
     },
     {
-        "id" : 5
+        "id" : 5,
         "año" : 2008,
         "metros" : 60,
         "habitaciones" : 2,
@@ -47,6 +47,17 @@ inmuebles = [
         "estado" : "Disponible",
     },
 ]
+
+
+metros = int(input("Ingrese los metros cuadrados del inmueble: "))
+
+habitaciones = int(input("Introdusca el numero de habitaciones: "))
+
+garage = int(input("¿Tiene garage? Introdusca 1 si es si, 0 si es no: "))
+
+antiguedad = int(input("Introdusca la antiguedad en años: "))
+
+zona = input("Introduce la zona del inmueble A, B, o C")
 
 def agregar_inmueble(inmueble):
     inmuebles.append(inmueble)
@@ -73,10 +84,10 @@ def calcular_precio(inmueble):
     # Cálculo del precio según la zona
     precio = 0
     if inmueble["zona"] == 'A':
-        precio = inmueble["metros" * 100 + "habitaciones" * 500 + "garage" * 1500] * 
+        precio = inmueble["metros" * 100 + "habitaciones" * 500 + "garage" * 1500] * (1 - antiguedad / 100)
     elif inmueble["zona"] == 'B':
-        precio = inmueble["metros" * 100 + "habitaciones" * 500 + "garage" * 1500] *
+        precio = inmueble["metros" * 100 + "habitaciones" * 500 + "garage" * 1500] * (1 - antiguedad / 100) * 1.5
     elif inmueble["zona"] == 'C':
-        precio = inmueble["metros" * 100 + "habitaciones" * 500 + "garage" * 1500] *
+        precio = inmueble["metros" * 100 + "habitaciones" * 500 + "garage" * 1500] * (1 - antiguedad / 100) * 2
     return precio
 
