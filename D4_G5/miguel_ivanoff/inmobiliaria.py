@@ -64,15 +64,10 @@ while True:
         print('\n =========== Buscar por un Presupuesto ==========')
         monto=int(input('\tIngrese su presupuesto: '))
         
-        prop_encontradas=[]
-        contador=0
+        prop_listadas=funciones.extrae_prop(lista_inmueble)
+        prop_finales=funciones.lista_final(prop_listadas,monto)
         
-        for p in lista_inmueble:
-            if p['estado']=="Disponible" or p['estado']=="Reservado":
-                contador+=1
-                valor=funciones.calculaPrecio(p['año'], p['metros'], p['habitaciones'], p['garaje'],p['zona'])
-                p['precio']=valor
-                prop_encontradas.append(p)
-        print(prop_encontradas)
+        for p in prop_finales:
+            print(p)
         input("<<ENTER>>")
         
