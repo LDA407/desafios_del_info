@@ -1,1 +1,2 @@
-datos de nada
+Hice algunos arreglos en tu código de menú
+agregué funciones
