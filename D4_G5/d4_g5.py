@@ -1,6 +1,14 @@
 import sys
+import datetime
 
-libro = []
+libro = [
+    {'año': 2010, 'metros': 150, 'habitaciones': 4, 'garaje': True, 'zona': 'C', 'estado': 'Disponible'}, 
+    {'año': 2016, 'metros': 80, 'habitaciones': 2, 'garaje': False, 'zona': 'B', 'estado': 'Reservado'}, 
+    {'año': 2000, 'metros': 180, 'habitaciones': 4, 'garaje': True, 'zona': 'A', 'estado': 'Disponible'}, 
+    {'año': 2015, 'metros': 95, 'habitaciones': 3, 'garaje': True, 'zona': 'B', 'estado': 'Vendido'}, 
+    {'año': 2008, 'metros': 60, 'habitaciones': 2, 'garaje': False, 'zona': 'C', 'estado': 'Disponible'}
+]
+
 
 def imprimir_la_binvenida():
     print(f"""
@@ -11,203 +19,178 @@ def imprimir_la_binvenida():
         [D]Eliminar una propiedad
         [B]uscar por presupuesto
         [L]istar las propiedades
+        [P] Lista de precios
+        [Z] Filtrar por la zona
+        [E] Filtrar por el estado
+        [C]calcular el precio
         [S]alir\n
         {'*' * 75}
         """
     )
 
 
-def crar_un_inmueble(data):
-    def agregar():
-        anio=int(input('Año de la Propiedad: '))
-        sup=int(input('Metros cuadrados: '))
-        habit=int(input('Cant. Habitaciones: '))
-        garaje= input('Garaje Si/No : ')
+def texto_de_ayuda(nombre_del_campo):
+    texto_de_ayuda = {
+        'id': 'Ingrese el id: ',
+        'año': "Año de construcción: ",
+        'metros': "Cantidad de metros cuadrados: ",
+        'habitaciones': "Cantidad de habitacione: ",
+        'garage': "Tiene garage, op[True, False]: ",
+        'zona': 'Elija la zona (A, B, C): ',
+        'estado': 'Seleccione estado (Disponible, Reservado, Vendido): ',
+        'nuevo_estado': 'Ingrese el nuevo estado (Disponible-Reservado-Vendido): ',
+    }
 
-        if garaje.lower()=='si':
-            garaje=True
-        else:
-            garaje=False
+    return texto_de_ayuda[nombre_del_campo]
 
-        zona=input('Elija la zona (A, B, C): ')
-        estado=input('Seleccione estado (Disponible, Reservado, Vendido): ')
-    
-        if validaParametros(anio,sup,habit,zona,estado):
-            propiedad={
-                'año':anio,
-                'metros': sup,
-                'habitaciones': habit,
-                'garaje': garaje,
-                'zona': zona.upper(),
-                'estado': estado
-            }
-            
-            return propiedad
-        else:
-            return False
-        
-    agregar()
 
-    def validaParametros(anio,sup,habit,sector,estado):
-        '''Hace las validaciones de los datos de cada propiedad ingresados
+def obtener_la_info(nombre_del_campo):
+    valor = None
+    while not valor:
+        valor = input(texto_de_ayuda(nombre_del_campo))
+    return valor
+
+
+def crar_un_inmueble():
+    data = {
+        'año': obtener_la_info('año'),
+        'metros': obtener_la_info('metros'),
+        'habitaciones': obtener_la_info('habitaciones'),
+        'garage': obtener_la_info('garage'),
+        'zona': obtener_la_info('zona'),
+        'estado': obtener_la_info('estado')
+    }
+
+    if data["garage"].lower()=='si':
+        data["garage"]=True
+    else:
+        data["garage"]=False
+
+    if validaParametros(data):
+        return data
+    else:
+        return False
+
+
+def validaParametros(data):
+    '''Hace las validaciones de los datos de cada propiedad ingresados
         a fin de aceptar o no la propiedad ingresada'''
 
-        if anio<2000:
-            print('Solo captamos desde el 2000 en adelante.')
-            return False
-            
-        if sup<60:
-            print('La superficie debe superar los 60,00 m2.')
-            return False
-            
-        if habit<2:
-            print('Debe tener un mínimo de 2 habitaciones.')
-            return False
-            
-        if sector.lower()!="a" and sector.lower()!="b" and sector.lower()!="c":
-            print('La propiedad debe pertenecer a los Sectores "A", "B" o "C".')
-            return False
-            
-        if (estado=="Disponible") or (estado=="Reservado") or (estado=="Vendido"):
-            return True
-            
-        else:
-            print('La propiedad debe estar Disponible, Reservada o Vendido.')
-            return False
+    if int(data["año"]) < 2000:
+        print('Solo captamos desde el 2000 en adelante.')
+        return False
+        
+    if int(data["metros"]) < 60:
+        print('La superficie debe superar los 60,00 m2.')
+        return False
+        
+    if int(data["habitaciones"]) < 2:
+        print('Debe tener un mínimo de 2 habitaciones.')
+        return False
+        
+    if data["zona"].lower() != "a" and data["zona"].lower()!="b" and data["zona"].lower()!="c":
+        print('La propiedad debe pertenecer a los Sectores "A", "B" o "C".')
+        return False
+        
+    if (data["estado"].lower() == "disponible") or (data["estado"].lower() == "reservado") or (data["estado"].lower() == "vendido"):
+        return True
+        
+    else:
+        print('La propiedad debe estar Disponible, Reservada o Vendido.')
+        return False
 
 
 def listar_los_inmuebles():
-    print([ 
-            {
-                'año': i[0],
-                'metros': i[1],
-                'habitaciones': i[2],
-                'garaje': i[3],
-                'zona': i[4],
-                'estado': i[5]
-            }
-            for i in libro
-        ])
+    print([ i for i in libro ])
 
 
 def actualziar_un_estado(id, nuevo_estado):
     registro = libro[id]
-    registro.estado = nuevo_estado
+    registro["estado"] = nuevo_estado
 
 
-#===== Hector larre ======
 def eliminar_un_inmueble(id):
-    "en este caso no es necesario agregar ids sino el indice"
-    def eliminar_inmueble(id):
-        for inmueble in inmuebles:
-            if inmueble[id] == id:
-                inmuebles.remove(inmueble)
-
-    eliminar_inmueble(id)
-
+    registro = libro[id]
+    libro.remove(registro)
 
 
 def filtrar_por_zona(zona):
-    print([ 
-            {
-                'año': i[0],
-                'metros': i[1],
-                'habitaciones': i[2],
-                'garaje': i[3],
-                'zona': i[4],
-                'estado': i[5]
-            }
-            for i in libro if i[f"{zona}"] == zona
-        ])
+    print([ i for i in libro if i["zona"] == zona.upper() ])
 
 
 def filtrar_por_esatdo(estado):
-    print([ 
-            {
-                'año': i[0],
-                'metros': i[1],
-                'habitaciones': i[2],
-                'garaje': i[3],
-                'zona': i[4],
-                'estado': i[5]
-            }
-            for i in libro if i[f"{estado}"] == estado
-        ])
+    print([ i for i in libro if i["estado"] == estado.upper() ])
 
+def antiguedad():
+    '''Extrae el año de la fecha actual para aplicarlo en la
+    determinación de la antiguedad de la propiedad'''
+    fecha_actual= datetime.datetime.now()
+    anio_hoy=fecha_actual.year
+    return anio_hoy
 
-def validar_el_campo(campo):
+def calcular_precio(id):
+    antiguedad = int(input("Introdusca la antiguedad en años: "))
+    registro = libro[id] if libro[id] and libro["año"] == antiguedad else "no hay registros"
 
+    precio = 0  
 
-
-def obtener_el_precio(id):
-    registro = libro[id]
-    def calcular_precio(id):
-        antiguedad = int(input("Introdusca la antiguedad en años: "))
-        precio = 0
-
-        if registro["zona"] == 'A':
-            precio = registro["metros" * 100 + "habitaciones" * 500 + "garage" * 1500] * (1 - antiguedad / 100)
-        
-        elif registro["zona"] == 'B':
-            precio = registro["metros" * 100 + "habitaciones" * 500 + "garage" * 1500] * (1 - antiguedad / 100) * 1.5
-        
-        elif registro["zona"] == 'C':
-            precio = registro["metros" * 100 + "habitaciones" * 500 + "garage" * 1500] * (1 - antiguedad / 100) * 2
-        
-        return precio
+    if registro["zona"] == 'A':
+        precio = (
+            registro["metros"] * 100 + registro["habitaciones"] * 500 + registro["garage"] * 1500) * (1-(antiguedad()-registro["año"] )/100)
     
-    calcular_precio(id)
-
-
-def eliminar_un_inmueble(id):
-    def eliminar_inmueble(id):
-        for inmueble in inmuebles:
-            if inmueble["id"] == id:
-                inmuebles.remove(inmueble)
-
-    eliminar_inmueble(id)
-
-
-def obrener_el_id():
-    id = input('Ingrese el id: ')
-    return id
-
-
+    elif registro["zona"] == 'B':
+        precio = (
+            registro["metros"] * 100 + registro["habitaciones"] * 500 + registro["garage"] * 1500) * (1-(antiguedad()-registro["año"] )/100) * 1.5
+    
+    elif registro["zona"] == 'C':
+        precio = (
+            registro["metros"] * 100 + registro["habitaciones"] * 500 + registro["garage"] * 1500) * (1-(antiguedad()-registro["año"] )/100) * 2
+    
+    return precio
 
 
 while True:
-    if __name__ == '__main__':
-        imprimir_la_binvenida()
-        comando = input()
-        comando = comando.upper()
+    imprimir_la_binvenida()
+    comando = input()
+    comando = comando.upper()
 
-        if comando == 'I':
-            ret=ingresar.agregar()
-            if type(ret)==dict:
-                libro.append(ret)    
-                input('La Propiedad fue Registrada.  <<Presiones ENTER>>')
-            else:
-                input('<<ENTER>>')
-        
-        if comando == 'M':
-            id = obrener_el_id()
-            nuevo_estado= input('Ingrese el nuevo estado (Disponible-Reservado-Vendido): ')
-            actualziar_un_estado(id, nuevo_estado)
+    if comando == 'I':
+        ret = crar_un_inmueble()
+        if type(ret)==dict:
+            libro.append(ret)    
+            input('La Propiedad fue Registrada.  <<Presiones ENTER>>')
+        else:
+            input('<<ENTER>>')
 
 
-        if comando == 'D':
-            listar_los_inmuebles()
-            id = obrener_el_id()
-            eliminar_un_inmueble(id)
+    if comando == 'M':
+        actualziar_un_estado(
+            int(obtener_la_info('id')),
+            obtener_la_info('nuevo_estado')
+        )
+        listar_los_inmuebles()
 
 
-        if comando == 'B':
-            monto=int(input('\tIngrese su presupuesto: '))
-            prop_listadas=buscar_por_estado(libro)
-            prop_finales=lista_final(prop_listadas,monto)
+    if comando == 'D':
+        listar_los_inmuebles()
+        eliminar_un_inmueble(int(obtener_la_info('id')))
 
-            for p in prop_finales:
-                print(p)
-            input("<<ENTER>>")
 
-    print('invalid command'); sys.exit()
+    # if comando == 'B':
+    #     filtrar_por_esatdo(obtener_la_info('estado'))
+
+
+    if comando == 'Z':
+        filtrar_por_zona(obtener_la_info('zona'))
+    
+
+    if comando == 'E':
+        filtrar_por_esatdo(obtener_la_info('estado'))
+    
+
+    if comando == 'L':
+        listar_los_inmuebles()
+
+
+    if comando == 'P':
+        calcular_precio(int(obtener_la_info('id')))
