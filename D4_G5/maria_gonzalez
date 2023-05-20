@@ -1,1 +1,49 @@
+def agregar_inmueble(lista, inmueble):
+    if validar_inmueble(inmueble):
+        lista.append(inmueble)
+        print("Inmueble agregado exitosamente.")
+    else:
+        print("El inmueble no cumple con las reglas de validación.")
 
+def editar_inmueble(lista, indice, nuevo_inmueble):
+    if validar_inmueble(nuevo_inmueble):
+        if indice >= 0 and indice < len(lista):
+            lista[indice] = nuevo_inmueble
+            print("Inmueble editado exitosamente.")
+        else:
+            print("El índice del inmueble a editar es inválido.")
+    else:
+        print("El inmueble no cumple con las reglas de validación.")
+
+def eliminar_inmueble(lista, indice):
+    if indice >= 0 and indice < len(lista):
+        del lista[indice]
+        print("Inmueble eliminado exitosamente.")
+    else:
+        print("El índice del inmueble a eliminar es inválido.")
+
+def cambiar_estado(lista, indice, nuevo_estado):
+    if indice >= 0 and indice < len(lista):
+        lista[indice]['estado'] = nuevo_estado
+        print("Estado del inmueble cambiado exitosamente.")
+    else:
+        print("El índice del inmueble es inválido.")
+
+def buscar_inmuebles(lista, presupuesto):
+    inmuebles_encontrados = []
+    for inmueble in lista:
+        if inmueble['estado'] in ['Disponible', 'Reservado']:
+            precio = calcular_precio(inmueble)
+            if precio <= presupuesto:
+                inmueble_con_precio = inmueble.copy()
+                inmueble_con_precio['precio'] = precio                
+                inmuebles_encontrados.append(inmueble_con_precio)
+    return inmuebles_encontrados
+
+def validar_inmueble(inmueble):
+    zona_valida = inmueble['zona'] in ['A', 'B', 'C']
+    estado_valido = inmueble['estado'] in ['Disponible', 'Reservado', 'Vendido']
+    antiguedad_valida = inmueble['año'] >= 2000
+    metros_validos = inmueble['metros'] >= 60
+    habitaciones_validas = inmueble['habitaciones'] >= 2
+    return zona_valida and estado_valido and antiguedad_valida and metros_validos and habitaciones_validas
