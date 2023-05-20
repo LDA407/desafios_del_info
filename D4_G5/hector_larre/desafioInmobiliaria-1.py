@@ -11,7 +11,7 @@ inmuebles = [
         "estado" : "Disponible",
     },
     {
-        "id" : 2
+        "id" : 2,
         "año" : 2016,
         "metros" : 80,
         "habitaciones" : 2,
@@ -20,7 +20,7 @@ inmuebles = [
         "estado" : "Reservado",
     },
     {
-        "id" : 3
+        "id" : 3,
         "año" : 2000,
         "metros" : 180,
         "habitaciones" : 4,
@@ -29,7 +29,7 @@ inmuebles = [
         "estado" : "Disponible",
     },
     {
-        "id" : 4
+        "id" : 4,
         "año" : 2015,
         "metros" : 95,
         "habitaciones" : 3,
@@ -38,7 +38,7 @@ inmuebles = [
         "estado" : "Vendido",
     },
     {
-        "id" : 5
+        "id" : 5,
         "año" : 2008,
         "metros" : 60,
         "habitaciones" : 2,
@@ -69,14 +69,14 @@ def buscar_inmuebles(precio_maximo):
             inmueble["PRECIO"] = calcular_precio(inmueble)
     return resultado
 
-def calcular_precio(inmueble):
-    # Cálculo del precio según la zona
-    precio = 0
-    if inmueble["zona"] == 'A':
-        precio = inmueble["metros" * 100 + "habitaciones" * 500 + "garage" * 1500] * 
-    elif inmueble["zona"] == 'B':
-        precio = inmueble["metros" * 100 + "habitaciones" * 500 + "garage" * 1500] *
-    elif inmueble["zona"] == 'C':
-        precio = inmueble["metros" * 100 + "habitaciones" * 500 + "garage" * 1500] *
-    return precio
+# def calcular_precio(inmueble):
+#     # Cálculo del precio según la zona
+#     precio = 0
+#     if inmueble["zona"] == 'A':
+#         precio = inmueble["metros" * 100 + "habitaciones" * 500 + "garage" * 1500] * 
+#     elif inmueble["zona"] == 'B':
+#         precio = inmueble["metros" * 100 + "habitaciones" * 500 + "garage" * 1500] *
+#     elif inmueble["zona"] == 'C':
+#         precio = inmueble["metros" * 100 + "habitaciones" * 500 + "garage" * 1500] *
+#     return precio
 

@@ -1,6 +1,6 @@
-from models.inmobiliario import Inmueble
-from validadores import validar_campos
-import ingresar
+from .models.inmobiliario import Inmueble
+from .validadores import validar_campos
+from .ingresar import agregar, validaParametros
 import datetime
 
 libro = [{'año': 2010, 'metros': 150, 'habitaciones': 4, 'garaje': True, 'zona': 'C', 'estado': 'Disponible'}, 
@@ -92,7 +92,6 @@ def lista_final(lista,presupuesto):
     for p in lista:
         if p['precio']<=presupuesto:
             listado_final.append(p)
-            
     return listado_final
 
 
@@ -126,6 +125,7 @@ def obtener_la_info(nombre_del_campo):
         valor = validar_campos(nombre_del_campo)
     return valor
 
+
 while True:
     if __name__ == '__main__':
         bienvenida()
@@ -148,9 +148,6 @@ while True:
             }
             crear_inmueble(data)
         
-
-
-
         if comando == 'I':
             ret=ingresar.agregar()
             if type(ret)==dict:
@@ -163,10 +160,8 @@ while True:
             nuevo_estado=input('Ingrese el nuevo estado (Disponible-Reservado-Vendido): ')
             modificar_el_estado(nuevo_estado)
 
-
         if comando == 'D':
             eliminar_inmueble()
-
 
         if comando == 'B':
             monto=int(input('\tIngrese su presupuesto: '))
@@ -176,18 +171,3 @@ while True:
                 print(p)
             input("<<ENTER>>")
 
-
-        '''p1 = Inmueble(año=2010, metros=255, habitaciones=6, garage=True, zona="A", estado="Disponible")
-        p2 = Inmueble(año=2000, metros=40, habitaciones=3, garage=False, zona="B", estado="Disponible")
-        libro.append(p1)
-        libro.append(p2)
-        mostrar_los_registros()
-        print("\nubicacion?")
-        buscar_por_zona("A")
-        print("\nesta disponible?")
-        buscar_por_estado("Disponible")
-        print("\ntiene garage?")
-        buscar_los_que_tengan_garage(False)'''
-
-
-   
