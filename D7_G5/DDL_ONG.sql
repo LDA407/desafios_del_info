@@ -15,7 +15,14 @@ CREATE TABLE IF NOT EXISTS Usuario (
   contraseña VARCHAR(45) NOT NULL,
   estado TINYINT NOT NULL,
   fecha_creacion DATETIME NOT NULL,
+  ------------------------------------------
+  -- por seguridad no se guardan las imagenes en la base de datos asi que esto hay que cambiarlo
+  -- a caracteres ya que django solo guarda las rutas.
+  ------------------------------------------
   avatar BLOB NULL,
+  ------------------------------------------
+  -- [es_publico, es_colaborador, es_admin] campos booleanos
+  ------------------------------------------
   es_publico TINYINT NOT NULL,
   es_colaborador TINYINT NOT NULL,
   es_admin TINYINT NOT NULL,
@@ -33,6 +40,7 @@ CREATE TABLE IF NOT EXISTS Articulo (
   estado TINYINT NOT NULL,
   imagen BLOB NULL,
   PRIMARY KEY (idArticulo)
+  -- solo faltaria agregar las claves foraneas
 )
 
 
@@ -44,6 +52,7 @@ CREATE TABLE IF NOT EXISTS Comentario (
   fecha_hora DATETIME NOT NULL,
   estado TINYINT NOT NULL,
   PRIMARY KEY (idComentario)
+  -- solo faltaria agregar las claves foraneas
 )
 
 
@@ -63,4 +72,5 @@ CREATE TABLE IF NOT EXISTS CategoriaArticulo (
   idCategoria INT NOT NULL,
   idArticulo INT NOT NULL,
   PRIMARY KEY (idCategoriaArticulo)
+  -- solo faltaria agregar las claves foraneas
 )
