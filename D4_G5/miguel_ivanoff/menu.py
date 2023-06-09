@@ -1,6 +1,6 @@
-from .models.inmobiliario import Inmueble
-from .validadores import validar_campos
-from .ingresar import agregar, validaParametros
+from models.inmobiliario import Inmueble
+from validadores import validar_campos
+from ingresar import agregar, validaParametros
 import datetime
 
 libro = [{'año': 2010, 'metros': 150, 'habitaciones': 4, 'garaje': True, 'zona': 'C', 'estado': 'Disponible'}, 
@@ -149,7 +149,7 @@ while True:
             crear_inmueble(data)
         
         if comando == 'I':
-            ret=ingresar.agregar()
+            ret=agregar()
             if type(ret)==dict:
                 libro.append(ret)    
                 input('La Propiedad fue Registrada.  <<Presiones ENTER>>')

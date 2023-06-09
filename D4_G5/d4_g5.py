@@ -50,7 +50,7 @@ def texto_de_ayuda(nombre_del_campo):
     return texto_de_ayuda[nombre_del_campo]
 
 
-def obtener_la_info(nombre_del_campo):
+def _input(nombre_del_campo):
     valor = None
     while not valor:
         valor = input(texto_de_ayuda(nombre_del_campo))
@@ -59,12 +59,12 @@ def obtener_la_info(nombre_del_campo):
 
 def crar_un_inmueble():
     data = {
-        'año': obtener_la_info('año'),
-        'metros': obtener_la_info('metros'),
-        'habitaciones': obtener_la_info('habitaciones'),
+        'año': _input('año'),
+        'metros': _input('metros'),
+        'habitaciones': _input('habitaciones'),
         'garage': ' ',
-        'zona': obtener_la_info('zona'),
-        'estado': obtener_la_info('estado').capitalize()
+        'zona': _input('zona'),
+        'estado': _input('estado').capitalize()
     }
 
     if data['zona'].lower() in 'ab':
@@ -130,72 +130,53 @@ def filtrar_por_esatdo(estado):
             print(i)
 
 
-
 def antiguedad():
-    '''Extrae el año de la fecha actual para aplicarlo en la
-    determinación de la antiguedad de la propiedad'''
     fecha_actual= datetime.datetime.now()
     anio_hoy=fecha_actual.year
     return anio_hoy
 
 
-def buscar_por_estado(lista):
-    '''Crea una lista de propiedades que tienen un determinado estado y 
-    calcula y agrega su precio como elemento.''' 
+def buscar_por_estado(lista): 
     prop_encontradas=[]
     contador=-1
     for p in lista:
-        if p['estado']=="Disponible" or p['estado']=="Reservado":
+        if p['estado'] in ["Disponible","estado","Reservado"]:
             contador+=1
-            valor=calculaPrecio(p['año'], p['metros'], p['habitaciones'], p['garage'],p['zona'])
+            valor=calculaPrecio(
+                p['año'], 
+                p['metros'], 
+                p['habitaciones'], 
+                p['garage'], 
+                p['zona']
+            )
             prop_encontradas.append(p)
             prop_encontradas[contador]['precio']=valor
     return prop_encontradas
 
 
 def calculaPrecio(anio,sup,habit,garage,sector):
-    '''Calcula precio de cada inmueble de acuerdo a características y zona'''         
     parcial=(sup*100+habit*500+buscar_los_que_tengan_garage(garage)*1500)*(1-(antiguedad()-anio)/100)
 
     if sector.lower()=="a":
         precio=parcial
         return precio
+    
     elif sector.lower()=="b":
         precio=parcial*1.5
         return precio
+    
     elif sector.lower()=='c':
         precio=parcial*2
         return precio
-    
-
-def antiguedad():
-    '''
-        Extrae el año de la fecha actual para aplicarlo en la
-        determinación de la antiguedad de la propiedad
-    '''
-    fecha_actual= datetime.datetime.now()
-    anio_hoy=fecha_actual.year
-    return anio_hoy
 
 
-def lista_final(lista,presupuesto):
-    '''
-        Obtiene una lista de propiedades cuyos precios son
-        menor o igual a un presupuesto ingresado.
-    '''
-    listado_final=[]
-    for p in lista:
-        if int(p['precio'])<=int(presupuesto):
-            listado_final.append(p)
+def lista_final(lista, presupuesto):
+    listado_final = [ i for i in lista if int(p['precio']) <= int(presupuesto)]
     return listado_final
 
 
 def buscar_los_que_tengan_garage(garage):
-    '''
-        Verifica si una propiedad tiene garage o no
-        y asigna valores de 0 o 1 para agregarle o no un valor a la propiedad
-    '''
-    val_garage = 1 if garage==True else 0
+    val_garage = 1 if garage == True else 0
     return val_garage
 
 
@@ -215,44 +196,54 @@ while True:
 
     if comando == 'M':
         actualziar_un_estado(
-            int(obtener_la_info('id')),
-            obtener_la_info('nuevo estado')
+            int(_input('id')),
+            _input('nuevo estado')
         )
         listar_los_inmuebles()
 
 
     if comando == 'D':
         listar_los_inmuebles()
-        eliminar_un_inmueble(int(obtener_la_info('id')))
-
-
-    # if comando == 'B':
-    #     filtrar_por_esatdo(obtener_la_info('estado'))
+        eliminar_un_inmueble(int(_input('id')))
 
 
     if comando == 'Z':
-        filtrar_por_zona(obtener_la_info('zona'))
-    
+        filtrar_por_zona(_input('zona'))
+
 
     if comando == 'E':
-        filtrar_por_esatdo(obtener_la_info('estado'))
-    
+        filtrar_por_esatdo(_input('estado'))
+
 
     if comando == 'L':
         listar_los_inmuebles()
 
 
     if comando == 'B':
-        monto = obtener_la_info('monto')
+        monto = _input('monto')
         prop_listadas = buscar_por_estado(libro)
         prop_finales = lista_final(prop_listadas,monto)
 
         for p in prop_finales:
             print(p)
         
-        input("<<ENTER>>")
-    
+        input("<<ENTER>>") 
+
 
     if comando == 'S':
         print('SESION FINALIZADA!!')
         break
+
+
+
+""""
+david lencina
+hector larre
+miguel ivanoff
+martin ismael
+nicolas dellama
+fernando maciel
+miriam fernandez
+gomez maria raquel
+maria jose gonsalez
+"""

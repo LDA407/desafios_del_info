@@ -1,0 +1,29 @@
+función de ingresar propiedades
+
+	función para validar los datos ingresados
+
+función para cambio de estado
+
+	función para eliminar una propiedad
+	
+
+	función de listar propiedades
+		para saber a cual cambiarle el estado
+		para saber cual eliminar
+
+función para buscar por estado 
+	para calcular precio
+
+	función verificar garaje 
+		para saber si es True o False y devolver 1 o 0
+		para poder aplicarlo en la formula
+
+	función antiguedad
+		aplicando la función datetime para aplicar al cálculo
+
+	función para calcular el precio
+		y asignarle al listado obtenido en la busqueda
+
+función para verificar el precio 
+	para saber si es menor o igual al presupuesto ingresado
+
