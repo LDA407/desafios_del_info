@@ -1,6 +1,6 @@
-#Desafío 7: Scripts de SQL – Blog 
+# Desafío 7: Scripts de SQL – Blog 
  
-##Requisitos técnicos:
+## Requisitos técnicos:
  - DDL
  - DML 
  
