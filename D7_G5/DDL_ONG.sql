@@ -40,7 +40,11 @@ CREATE TABLE IF NOT EXISTS Articulo (
   estado TINYINT NOT NULL,
   imagen BLOB NULL,
   PRIMARY KEY (idArticulo)
-  -- solo faltaria agregar las claves foraneas
+  
+  CONSTRAINT nombre {
+    FOREIGN KEY | UNIQUE | 
+    REFERENCES Usuario [(campo externo1, campo externo2)]
+  } 
 )
 
 
@@ -52,7 +56,16 @@ CREATE TABLE IF NOT EXISTS Comentario (
   fecha_hora DATETIME NOT NULL,
   estado TINYINT NOT NULL,
   PRIMARY KEY (idComentario)
-  -- solo faltaria agregar las claves foraneas
+  
+  CONSTRAINT nombre {
+    FOREIGN KEY | UNIQUE | 
+    REFERENCES Articulo [(campo externo1, campo externo2)]
+  }
+
+  CONSTRAINT nombre {
+    FOREIGN KEY | UNIQUE | 
+    REFERENCES Usuario [(campo externo1, campo externo2)]
+  }
 )
 
 
@@ -64,6 +77,11 @@ CREATE TABLE IF NOT EXISTS Categoria (
   estado TINYINT NOT NULL,
   idSubCategoria INT NULL,
   PRIMARY KEY (idCategoria)
+
+  -- CONSTRAINT nombre {
+  --   FOREIGN KEY | UNIQUE | 
+  --   REFERENCES Categoria [(campo externo1, campo externo2)]
+  -- }
 )
 
 
@@ -72,5 +90,14 @@ CREATE TABLE IF NOT EXISTS CategoriaArticulo (
   idCategoria INT NOT NULL,
   idArticulo INT NOT NULL,
   PRIMARY KEY (idCategoriaArticulo)
-  -- solo faltaria agregar las claves foraneas
+
+  CONSTRAINT nombre {
+    FOREIGN KEY | UNIQUE | 
+    REFERENCES Categoria [(campo externo1, campo externo2)]
+  }
+
+  CONSTRAINT nombre {
+    FOREIGN KEY | UNIQUE | 
+    REFERENCES Articulo [(campo externo1, campo externo2)]
+  }
 )
