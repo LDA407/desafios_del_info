@@ -36,6 +36,7 @@ VALUES ('abel', 'pintos', 'abel', '3624987234', 'pintos35@gmail.com', MD5('asijd
 
 UPDATE Usuario SET es_admin=1 WHERE idUsuario=2;
 
+
 ------------------------------------------
 -- DML para Articulo
 ------------------------------------------
@@ -55,6 +56,25 @@ VALUES (2, 'asdñkasñod','asdpokasdokasdo','ajsdnkajsdnkajasdaksdm kjnaskjanskj
 
 DELETE FROM Articulo WHERE estado=0;
 
+-- Agregar el comando necesario para listar todos los artículos que tengan
+-- comentarios, mostrando el título del artículo, la fecha_publicacion del artículo, el
+-- nombre del usuario que realizo el comentario y la fecha_hora que realizó dicho
+-- comentario, agrupados por artículos.
+SELECT titulo, fecha_publicacion FROM Articulo
+LEFT JOIN Comentario ON Articulo.idArticulo = Comentario.idArticulo
+GROUP BY Articulo;
+
+SELECT idEmpleado,apPaterno,fechCambio,nombreTienda
+FROM (
+    SELECT FK_idEmpleado,
+    FROM empleado_tienda
+    GROUP BY 1  
+) c1 JOIN empleado_tienda
+USING(FK_idEmpleado,fechCambio)
+JOIN empleado ON FK_idEmpleado=idEmpleado
+JOIN tienda ON FK_idTienda=idTienda;
+
+
 ------------------------------------------
 -- DML para Comentario
 ------------------------------------------
@@ -62,26 +82,47 @@ INSERT INTO Comentario(idArticulo, idUsuario, contenido, fecha_hora, estado)
 VALUES (1,9,'aksmdlaksmdlaksmdlkm', '1996-12-31 23:59:59', 1);
 
 INSERT INTO Comentario(idArticulo, idUsuario, contenido, fecha_hora, estado)
-VALUES (4,8,'alskdmalksdmlaksmdlalskdmlkasmd', '1996-12-31 23:59:59', 1);
+VALUES (1,8,'alskdmalksdmlaksmdlalskdmlkasmd', '1996-12-31 23:59:59', 1);
 
 INSERT INTO Comentario(idArticulo, idUsuario, contenido, fecha_hora, estado)
-VALUES (2,9,'alskdmlaksd', '1996-12-31 23:59:59', 1);
+VALUES (1,5,'alskdmlaksd', '1996-12-31 23:59:59', 1);
 
 INSERT INTO Comentario(idArticulo, idUsuario, contenido, fecha_hora, estado)
-VALUES (3,7,'alskmdlkasmdlkamsdlkamsdlkasmd', '1996-12-31 23:59:59', 1);
+VALUES (2,7,'asdaksdjkasjdaksjd', '1996-12-31 23:59:59', 1);
+
+INSERT INTO Comentario(idArticulo, idUsuario, contenido, fecha_hora, estado)
+VALUES (2,6,'asdaksuhdkasjhd', '1996-12-31 23:59:59', 1);
 
 
 ------------------------------------------
 -- DML para Categoria
 ------------------------------------------
-INSERT INTO Categoria(nombre, descripcion, imagen, estado, idSubCategoria)
-VALUES ();
+
+INSERT INTO Categoria(nombre, estado) VALUES ('deportes', 1);
+
+INSERT INTO Categoria(nombre, estado) VALUES ('politica', 1);
+
+INSERT INTO Categoria(nombre, estado) VALUES ('internacionales', 1);
+
+INSERT INTO Categoria(nombre, estado) VALUES ('finanzas', 1);
+
+INSERT INTO Categoria(nombre, estado) VALUES ('economia', 1);
+
+INSERT INTO Categoria(nombre, estado) VALUES ('ciencia', 1);
+
+INSERT INTO Categoria(nombre, estado) VALUES ('tecnonlogia', 1);
+
+INSERT INTO Categoria(nombre, estado) VALUES ('policiales', 1);
 
 
 ------------------------------------------
 -- DML para CategoriaArticulo
 ------------------------------------------
-INSERT INTO CategoriaArticulo(idCategoria, idArticulo)
-VALUES ();
+
+INSERT INTO CategoriaArticulo(idCategoria, idArticulo) VALUES (8,1);
+
+INSERT INTO CategoriaArticulo(idCategoria, idArticulo) VALUES (2,2);
+
+INSERT INTO CategoriaArticulo(idCategoria, idArticulo) VALUES (1,3);
 
 
