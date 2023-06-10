@@ -60,19 +60,7 @@ DELETE FROM Articulo WHERE estado=0;
 -- comentarios, mostrando el título del artículo, la fecha_publicacion del artículo, el
 -- nombre del usuario que realizo el comentario y la fecha_hora que realizó dicho
 -- comentario, agrupados por artículos.
-SELECT titulo, fecha_publicacion FROM Articulo
-LEFT JOIN Comentario ON Articulo.idArticulo = Comentario.idArticulo
-GROUP BY Articulo;
-
-SELECT idEmpleado,apPaterno,fechCambio,nombreTienda
-FROM (
-    SELECT FK_idEmpleado,
-    FROM empleado_tienda
-    GROUP BY 1  
-) c1 JOIN empleado_tienda
-USING(FK_idEmpleado,fechCambio)
-JOIN empleado ON FK_idEmpleado=idEmpleado
-JOIN tienda ON FK_idTienda=idTienda;
+---
 
 
 ------------------------------------------
@@ -92,6 +80,19 @@ VALUES (2,7,'asdaksdjkasjdaksjd', '1996-12-31 23:59:59', 1);
 
 INSERT INTO Comentario(idArticulo, idUsuario, contenido, fecha_hora, estado)
 VALUES (2,6,'asdaksuhdkasjhd', '1996-12-31 23:59:59', 1);
+
+
+-- ==============================  INNER JOIN AGREGADO AL QUERY =================================
+-- listando articulos con comentarios, ordenados por artículo
+SELECT articulo.titulo, articulo.fecha_publicacion, usuario.nombre, comentario.fecha_hora
+FROM articulo
+INNER JOIN comentario
+ON comentario.id_articulo=articulo.id_articulo
+INNER JOIN usuario
+ON comentario.id_usuario=usuario.id_usuario
+order by articulo.id_articulo
+
+-- ================================================================================================
 
 
 ------------------------------------------
