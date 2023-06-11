@@ -3,57 +3,80 @@
     - Herencia
     - Encapsulamiento
 
-Crear las siguientes clases con sus atributos y métodos.
-Clase Usuario
-    atributos:
-        - id
-        - nombre
-        - apellido
-        - teléfono
-        - username
-        - email
-        - contraseña
-        - fecha de
-        - registro
-        - avatar
-        - estado
-        - online
-    métodos: 
-        - login()
-        - registrar()
+## Crear las siguientes clases con sus atributos y métodos.
+```python
+class Usuario:
 
-Clase Publico(Usuario)
-    atributo:
-        - es_publico
-    métodos:
-        - registrar()
-        - comentar()
+    def __init__(self):
+        self.id
+        self.nombre
+        self.apellido
+        self.teléfono
+        self.username
+        self.email
+        self.contraseña
+        self.fecha_de_registro
+        self.avatar
+        self.estado
 
-clase Colaborador(Usuario)
-    atributos: es_colaborador
-    métodos:
-        - registrar()
-        - comentar()
-        - publicar()
+    def __str__(self):
+        return self.name
+    
+    def login(self):
+        return self.name
+    
+    def registrar(self):
+        return self.name
 
-clase Articulo
-    atributos:
-        - id
-        - id_usuario
-        - titulo
-        - resumen
-        - contenido
-        - fecha_publicacion
-        - imagen
-        - estado
 
-clase Comentario
-    atributos:
-        - id
-        - id_articulo
-        - id_usuario
-        - contenido
-        - fecha_hora
-        - estado
+class Publico(Usuario):
 
-### Código para elegir entre registrar usuarios o hacer login (si ya está registrado). Una vez registrado y logueado, código que permita comentar al Publico y además publicar al Colaborador
+    def __init__(self):
+        self.es_publico
+    
+    def registrar():
+        pass
+    
+    def comentar():
+        pass
+
+
+class Colaborador(Usuario)
+    def __init__(self):
+        self.es_colaborador
+    
+    def registrar():
+        pass
+    
+    def comentar():
+        pass
+    
+    def publicar():
+        pass
+
+
+class Articulo:
+    def __init__(self):
+        self.id
+        self.id_usuario
+        self.titulo
+        self.resumen
+        self.contenido
+        self.fecha_publicacion
+        self.imagen
+        self.estado
+
+
+class Comentario:
+    def __init__(self):
+        self.id
+        self.id_articulo
+        self.id_usuario
+        self.contenido
+        self.fecha_hora
+        self.estado
+```
+
+```text
+Código para elegir entre registrar usuarios o hacer login (si ya está registrado). Una vez registrado y logueado, código que permita comentar al Publico y además publicar al Colaborador
+```
