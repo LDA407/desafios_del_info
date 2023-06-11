@@ -1,21 +1,59 @@
-# Desafío 7: Scripts de SQL – Blog 
- 
+# Desafío 8: Principios de programación orientada a objetos
 ## Requisitos técnicos:
- - DDL
- - DML 
- 
-Debes escribir los comandos SQL que permitan la creación de las tablas con sus respectivas restricciones de claves primarias y foráneas. 
- 
-- Agregar el comando necesario que introduzca en la tabla usuario, 1 usuario con rol de admin, 4 con rol de colaborador y 5 con rol de público. Donde los campos: es_publico, es_colaborador y es_admin son booleanos.
+    - Herencia
+    - Encapsulamiento
 
-- Agregar el comando necesario para actualizar el rol a admin de uno de los usuarios agregado con rol de colaborador.
+Crear las siguientes clases con sus atributos y métodos.
+Clase Usuario
+    atributos:
+        - id
+        - nombre
+        - apellido
+        - teléfono
+        - username
+        - email
+        - contraseña
+        - fecha de
+        - registro
+        - avatar
+        - estado
+        - online
+    métodos: 
+        - login()
+        - registrar()
 
-- Agregar el comando necesario que introduzca en la tabla articulo, 3 artículos con estado TRUE y uno con estado FALSE. Donde el campo estado en todas las tablas es Booleano. 
+Clase Publico(Usuario)
+    atributo:
+        - es_publico
+    métodos:
+        - registrar()
+        - comentar()
 
-- Agregar el comando necesario para eliminar el artículo que tenga estado FALSE.
+clase Colaborador(Usuario)
+    atributos: es_colaborador
+    métodos:
+        - registrar()
+        - comentar()
+        - publicar()
 
-- Agregar el comando necesario que introduzca 3 comentarios al primer artículo agregado y 2 comentarios al segundo artículo.
+clase Articulo
+    atributos:
+        - id
+        - id_usuario
+        - titulo
+        - resumen
+        - contenido
+        - fecha_publicacion
+        - imagen
+        - estado
 
-- Agregar el comando necesario para listar todos los artículos que tengan comentarios, mostrando el título del artículo, la fecha_publicacion del artículo, el nombre del usuario que realizo el comentario y la fecha_hora que realizó dicho comentario, agrupados por artículos. 
- 
- 
+clase Comentario
+    atributos:
+        - id
+        - id_articulo
+        - id_usuario
+        - contenido
+        - fecha_hora
+        - estado
+
+### Código para elegir entre registrar usuarios o hacer login (si ya está registrado). Una vez registrado y logueado, código que permita comentar al Publico y además publicar al Colaborador
