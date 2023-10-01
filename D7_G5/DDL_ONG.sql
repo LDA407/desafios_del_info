@@ -3,101 +3,71 @@ CREATE DATABASE IF NOT EXISTS ong_db;
 
 USE ong_db;
 
-ENGINE = InnoDB;
+
 
 CREATE TABLE IF NOT EXISTS Usuario (
   idUsuario INT NOT NULL AUTO_INCREMENT,
-  nombre VARCHAR(45) NULL,
-  apellido VARCHAR(45) NULL,
-  username VARCHAR(45) NOT NULL,
-  telefono VARCHAR(45) NULL,
-  email VARCHAR(45) NOT NULL,
-  contraseña VARCHAR(45) NOT NULL,
+  nombre VARCHAR(100),
+  apellido VARCHAR(100),
+  username VARCHAR(100) NOT NULL,
+  telefono VARCHAR(45),
+  email VARCHAR(255) NOT NULL,
+  contraseña VARCHAR(255) NOT NULL,
   estado TINYINT NOT NULL,
   fecha_creacion DATETIME NOT NULL,
-  ------------------------------------------
-  -- por seguridad no se guardan las imagenes en la base de datos asi que esto hay que cambiarlo
-  -- a caracteres ya que django solo guarda las rutas.
-  ------------------------------------------
-  avatar BLOB NULL,
-  ------------------------------------------
-  -- [es_publico, es_colaborador, es_admin] campos booleanos
-  ------------------------------------------
+  avatar VARCHAR(255),
   es_publico TINYINT NOT NULL,
   es_colaborador TINYINT NOT NULL,
   es_admin TINYINT NOT NULL,
   PRIMARY KEY (idUsuario)
-)
+);
 
 
 CREATE TABLE IF NOT EXISTS Articulo (
   idArticulo INT NOT NULL AUTO_INCREMENT,
   idUsuario INT NOT NULL,
-  titulo VARCHAR(45) NOT NULL,
-  resumen VARCHAR(45) NULL,
-  contenido VARCHAR(45) NOT NULL,
+  titulo VARCHAR(100) NOT NULL,
+  resumen VARCHAR(255),
+  contenido VARCHAR(1000) NOT NULL,
   fecha_publicacion DATETIME NOT NULL,
   estado TINYINT NOT NULL,
-  imagen BLOB NULL,
-  PRIMARY KEY (idArticulo)
-  
-  CONSTRAINT nombre {
-    FOREIGN KEY | UNIQUE | 
-    REFERENCES Usuario [(campo externo1, campo externo2)]
-  } 
-)
+  imagen VARCHAR(255),
+  PRIMARY KEY (idArticulo),
+  FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario)
+);
 
 
 CREATE TABLE IF NOT EXISTS Comentario (
   idComentario INT NOT NULL AUTO_INCREMENT,
   idArticulo INT NOT NULL,
   idUsuario INT NOT NULL,
-  contenido VARCHAR(45) NOT NULL,
+  contenido VARCHAR(500) NOT NULL,
   fecha_hora DATETIME NOT NULL,
   estado TINYINT NOT NULL,
-  PRIMARY KEY (idComentario)
+  PRIMARY KEY (idComentario),
   
-  CONSTRAINT nombre {
-    FOREIGN KEY | UNIQUE | 
-    REFERENCES Articulo [(campo externo1, campo externo2)]
-  }
-
-  CONSTRAINT nombre {
-    FOREIGN KEY | UNIQUE | 
-    REFERENCES Usuario [(campo externo1, campo externo2)]
-  }
-)
+  FOREIGN KEY (idArticulo) REFERENCES Articulo(idArticulo),
+  FOREIGN KEY (idUsuario) REFERENCES Usuario(idUsuario)
+);
 
 
 CREATE TABLE IF NOT EXISTS Categoria (
   idCategoria INT NOT NULL AUTO_INCREMENT,
-  nombre VARCHAR(45) NOT NULL,
-  descripcion VARCHAR(45) NULL,
-  imagen BLOB NULL,
+  nombre VARCHAR(100) NOT NULL,
+  descripcion VARCHAR(255),
+  imagen VARCHAR(255),
   estado TINYINT NOT NULL,
   idSubCategoria INT NULL,
   PRIMARY KEY (idCategoria)
-
-  -- CONSTRAINT nombre {
-  --   FOREIGN KEY | UNIQUE | 
-  --   REFERENCES Categoria [(campo externo1, campo externo2)]
-  -- }
-)
+);
 
 
 CREATE TABLE IF NOT EXISTS CategoriaArticulo (
   idCategoriaArticulo INT NOT NULL AUTO_INCREMENT,
   idCategoria INT NOT NULL,
   idArticulo INT NOT NULL,
-  PRIMARY KEY (idCategoriaArticulo)
+  PRIMARY KEY (idCategoriaArticulo),
 
-  CONSTRAINT nombre {
-    FOREIGN KEY | UNIQUE | 
-    REFERENCES Categoria [(campo externo1, campo externo2)]
-  }
-
-  CONSTRAINT nombre {
-    FOREIGN KEY | UNIQUE | 
-    REFERENCES Articulo [(campo externo1, campo externo2)]
-  }
-)
+  FOREIGN KEY (idCategoria) REFERENCES Categoria(idCategoria),
+  FOREIGN KEY (idArticulo) REFERENCES Articulo(idArticulo)
+);

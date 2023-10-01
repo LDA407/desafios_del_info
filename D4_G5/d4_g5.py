@@ -1,4 +1,4 @@
-import sys
+from os import system
 import datetime
 
 libro = [
@@ -19,7 +19,6 @@ def imprimir_la_binvenida():
         [D]Eliminar una propiedad
         [B]uscar por presupuesto
         [L]istar las propiedades
-        [P] Lista de precios
         [Z] Filtrar por la zona
         [E] Filtrar por el estado
         [S]alir\n
@@ -52,25 +51,33 @@ def texto_de_ayuda(nombre_del_campo):
 
 def _input(nombre_del_campo):
     valor = None
+
     while not valor:
+        system('cls')
+        valor = input(texto_de_ayuda(nombre_del_campo))
+    return valor
+
+
+def comprobar_digito(nombre_del_campo):
+    valor = None
+
+    while not valor or not valor.isdigit():
+        system('cls')
+        print("Solo se admiten numeros enteros")
         valor = input(texto_de_ayuda(nombre_del_campo))
     return valor
 
 
 def crar_un_inmueble():
     data = {
-        'año': _input('año'),
-        'metros': _input('metros'),
-        'habitaciones': _input('habitaciones'),
+        'año': int(comprobar_digito('año')),
+        'metros': int(comprobar_digito('metros')),
+        'habitaciones': int(comprobar_digito('habitaciones')),
         'garage': ' ',
-        'zona': _input('zona'),
+        'zona': _input('zona').upper(),
         'estado': _input('estado').capitalize()
     }
-
-    if data['zona'].lower() in 'ab':
-        data['garage']=True
-    else:
-        data['garage']=False
+    data['garage'] = True if data['zona'] in 'AB' else False
 
     if validaParametros(data):
         return data
@@ -80,23 +87,23 @@ def crar_un_inmueble():
 
 def validaParametros(data):
 
-    if int(data['año']) < 2000:
+    if data['año'] < 2000:
         print('Solo captamos desde el 2000 en adelante.')
         return False
         
-    if int(data['metros']) < 60:
+    if data['metros'] < 60:
         print('La superficie debe superar los 60,00 m2.')
         return False
         
-    if int(data['habitaciones']) < 2:
+    if data['habitaciones'] < 2:
         print('Debe tener un mínimo de 2 habitaciones.')
         return False
         
-    if data['zona'].lower() not in 'abc':
+    if data['zona'] not in 'ABC':
         print("La propiedad debe pertenecer a los Sectores 'A', 'B' o 'C'.")
         return False
         
-    if data['estado'].lower() in ['disponible', 'reservado', 'vendido']:
+    if data['estado'] in 'Disponible, Reservado, Vendido':
         return True
     else:
         print('La propiedad debe estar Disponible, Reservada o Vendido.')
@@ -105,15 +112,20 @@ def validaParametros(data):
 
 def listar_los_inmuebles():
     for i in libro:
-        print(i)
+        print(f"{libro.index(i)}:", i)
 
 
 def actualziar_un_estado(id, nuevo_estado):
+    listar_los_inmuebles()
     registro = libro[id]
+    print(registro)
+
     registro['estado'] = nuevo_estado.capitalize()
+    print(registro)
 
 
 def eliminar_un_inmueble(id):
+    listar_los_inmuebles()
     registro = libro[id]
     libro.remove(registro)
 
@@ -136,26 +148,23 @@ def antiguedad():
     return anio_hoy
 
 
-def buscar_por_estado(lista): 
-    prop_encontradas=[]
-    contador=-1
-    for p in lista:
-        if p['estado'] in ["Disponible","estado","Reservado"]:
-            contador+=1
-            valor=calculaPrecio(
-                p['año'], 
-                p['metros'], 
-                p['habitaciones'], 
-                p['garage'], 
-                p['zona']
-            )
-            prop_encontradas.append(p)
-            prop_encontradas[contador]['precio']=valor
-    return prop_encontradas
+def buscar_por_presupuesto(lista):
+    def asigna_precios(p):
+        p['precio'] = calculaPrecio(
+            p['año'],
+            p['metros'],
+            p['habitaciones'],
+            p['garage'],
+            p['zona']
+        )
+        return p
+    return [asigna_precios(p) for p in lista]
 
 
 def calculaPrecio(anio,sup,habit,garage,sector):
-    parcial=(sup*100+habit*500+buscar_los_que_tengan_garage(garage)*1500)*(1-(antiguedad()-anio)/100)
+    parcial=(
+        sup*100 + habit*500 + buscar_los_que_tengan_garage(garage)*1500
+    ) * (1-(antiguedad()-anio)//100)
 
     if sector.lower()=="a":
         precio=parcial
@@ -171,12 +180,12 @@ def calculaPrecio(anio,sup,habit,garage,sector):
 
 
 def lista_final(lista, presupuesto):
-    listado_final = [ i for i in lista if int(p['precio']) <= int(presupuesto)]
+    listado_final = [i for i in lista if i['precio'] <= int(presupuesto)]
     return listado_final
 
 
 def buscar_los_que_tengan_garage(garage):
-    val_garage = 1 if garage == True else 0
+    val_garage = 1 if garage else 0
     return val_garage
 
 
@@ -186,6 +195,7 @@ while True:
     comando = comando.upper()
 
     if comando == 'I':
+        system("cls")
         ret = crar_un_inmueble()
         if type(ret)==dict:
             libro.append(ret)    
@@ -193,44 +203,45 @@ while True:
         else:
             input('<<ENTER>>')
 
-
     if comando == 'M':
+        system("cls")
+        listar_los_inmuebles()
         actualziar_un_estado(
-            int(_input('id')),
+            int(comprobar_digito('id')),
             _input('nuevo estado')
         )
         listar_los_inmuebles()
 
-
     if comando == 'D':
+        system("cls")
         listar_los_inmuebles()
-        eliminar_un_inmueble(int(_input('id')))
-
+        eliminar_un_inmueble(int(comprobar_digito('id')))
 
     if comando == 'Z':
+        system("cls")
         filtrar_por_zona(_input('zona'))
 
-
     if comando == 'E':
+        system("cls")
         filtrar_por_esatdo(_input('estado'))
 
-
     if comando == 'L':
+        system("cls")
         listar_los_inmuebles()
 
-
     if comando == 'B':
-        monto = _input('monto')
-        prop_listadas = buscar_por_estado(libro)
-        prop_finales = lista_final(prop_listadas,monto)
+        system("cls")
+        monto = comprobar_digito('monto')
+        prop_listadas = buscar_por_presupuesto(libro)
+        prop_finales = lista_final(prop_listadas, monto)
 
         for p in prop_finales:
             print(p)
         
         input("<<ENTER>>") 
 
-
     if comando == 'S':
+        system("cls")
         print('SESION FINALIZADA!!')
         break
 
